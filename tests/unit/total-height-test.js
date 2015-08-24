@@ -10,11 +10,11 @@ test("single column", function(assert) {
   var content = generateContent(20);
 
   Ember.run(()=>{
-    this.render(template);
     this.setProperties({ width, height, itemWidth, itemHeight, content });
+    this.render(template);
   });
 
-  assert.equal(this.$('.ember-collection div:first').height(), 1000);
+  assert.equal(this.$('.list-item:first').parent().parent().height(), 1000);
 });
 
 test("even", function(assert) {
@@ -22,11 +22,11 @@ test("even", function(assert) {
   var content = generateContent(20);
 
   Ember.run(()=>{
-    this.render(template);
     this.setProperties({ width, height, itemWidth, itemHeight, content });
+    this.render(template);
   });
 
-  assert.equal(this.$('.ember-collection div:first').height(), 500);
+  assert.equal(this.$('.list-item:first').parent().parent().height(), 500);
 });
 
 test("odd", function(assert) {
@@ -34,9 +34,9 @@ test("odd", function(assert) {
   var content = generateContent(21);
 
   Ember.run(()=>{
-    this.render(template);
     this.setProperties({ width, height, itemWidth, itemHeight, content });
+    this.render(template);
   });
 
-  assert.equal(this.$('.ember-collection div:first').height(), 550);
+  assert.equal(this.$('.list-item:first').parent().parent().height(), 550);
 });

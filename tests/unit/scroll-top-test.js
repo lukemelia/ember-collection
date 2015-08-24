@@ -12,11 +12,11 @@ test("base case", function(assert) {
   var offsetY = 0;
 
   Ember.run(() => {
-    this.render(template);
     this.setProperties({ width, height, itemWidth, itemHeight, content, offsetY });
+    this.render(template);
   });
   assert.equal(this.$('.ember-collection').prop('scrollTop'), 0);
-  var positionSorted = sortElementsByPosition(this.$('.ember-list-item-view'));
+  var positionSorted = sortElementsByPosition(this.$('.list-item'));
   assert.equal(
     Ember.$(positionSorted[0]).text().trim(),
     "Item 1", "The first item has not been hidden");

@@ -11,10 +11,10 @@ test('display 5 in 6', function(assert) {
   var content = generateContent(5);
 
   Ember.run(() => {
-    this.render(template);
     this.setProperties({ width, height, itemWidth, itemHeight, content, offsetY });
+    this.render(template);
   });
-  var positionSorted = sortElementsByPosition(this.$('.ember-list-item-view'));
+  var positionSorted = sortElementsByPosition(this.$('.list-item'));
 
   assert.equal(
     Ember.$(positionSorted[0]).text().trim(),

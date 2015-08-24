@@ -8,78 +8,26 @@ function generateContent(n) {
   }
   return content;
 }
-function extractPositionFromTransform(string) {
-  var matched, x, y, position;
 
-  matched = string.match(/translate(?:3d)?\((-?\d+)px,\s*(-?\d+)px/);
-
-  x = parseInt(matched[1], 10);
-  y = parseInt(matched[2], 10);
-
-  position = {
-    x: x,
-    y: y
-  };
-
-  return position;
-}
-
-function extractNumberFromPosition(string) {
-  var number = string.replace(/px/g,'');
-  return parseInt(number, 10);
-}
 function extractPosition(element) {
-  var style, position, i;
-
-  style = element.style;
-
-  position = {x: 0, y:0};
-  if (style.top) {
-    position.x += extractNumberFromPosition(style.top);
-    position.y += extractNumberFromPosition(style.left);
-  }
-  for (i in Array.apply(null, style)) {
-    var transformProp = style[i];
-    if (/transform/.test(transformProp)) {
-      var transPosition = extractPositionFromTransform(style[transformProp]);
-      position.x += transPosition.x;
-      position.y += transPosition.y;
-      break;      
-    }
-  }
-  return position;
+  return element.getBoundingClientRect();
 }
 
 function sortElementsByPosition (elements) {
   return elements.sort(function(a, b){
-    var aPosition, bPosition;
-
-    aPosition = extractPosition(a);
-    bPosition = extractPosition(b);
-
-    if (bPosition.y === aPosition.y){
-      return (aPosition.x - bPosition.x);
-    } else {
-      return (aPosition.y - bPosition.y);
-    }
+    return sortByPosition(extractPosition(a), extractPosition(b));
   });
 }
 
-function sortByPosition (a, b) {
-  var aPosition, bPosition;
-
-  aPosition = a;
-  bPosition = b;
-
-  if (bPosition.y === aPosition.y){
-    return (aPosition.x - bPosition.x);
-  } else {
-    return (aPosition.y - bPosition.y);
+function sortByPosition(a, b) {
+  if (b.top === a.top){
+    return (a.left - b.left);
   }
+  return (a.top - b.top);
 }
 
 function itemPositions(view) {
-  return Ember.A(view.$('.ember-list-item-view').toArray()).map(function(e) {
+  return Ember.A(view.$('.ember-list-item').toArray()).map(function(e) {
     return extractPosition(e);
   }).sort(sortByPosition);
 }

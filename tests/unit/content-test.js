@@ -16,36 +16,36 @@ moduleForComponent('ember-collection', 'manipulate content', {
 test("replacing the list content", function(assert) {
   var content = generateContent(nItems);
   Ember.run(()=>{
-    this.render(template);
     this.setProperties({height, width, itemHeight, itemWidth, content});
+    this.render(template);
     this.set('content', Ember.A([{name: 'The only item'}]));
   });
 
   Ember.run(()=>{
-    assert.equal(this.$('.ember-list-item-view')
+    assert.equal(this.$('.list-item')
       .filter(function(){ return $(this).css('display') !== 'none'; })
       .length, 1, "The rendered list was updated");
-    assert.equal(this.$('.ember-collection div:first').height(), itemHeight, "The scrollable view has the correct height");
+    assert.equal(this.$('.list-item:first').parent().parent().height(), itemHeight, "The scrollable view has the correct height");
   });
 });
 
 test("adding to the front of the list content", function(assert) {
   var content = generateContent(nItems);
   Ember.run(()=>{
-    this.render(template);
     this.setProperties({height, width, itemHeight, itemWidth, content});
+    this.render(template);
   });
   Ember.run(function() {
     content.unshiftObject({name: "Item -1"});
   });
 
-  var positionSorted = sortElementsByPosition(this.$('.ember-list-item-view'));
+  var positionSorted = sortElementsByPosition(this.$('.list-item'));
   assert.equal(
     Ember.$(positionSorted[0]).text().trim(),
     "Item -1", "The item has been inserted in the list");
   var expectedRows = Math.ceil((nItems + 1) / (width / itemWidth));
   assert.equal(
-    this.$('.ember-collection div:first').height(),
+    this.$('.list-item').parent().parent().height(),
     expectedRows * itemHeight,
     "The scrollable view has the correct height");
 });
@@ -53,14 +53,14 @@ test("adding to the front of the list content", function(assert) {
 test("inserting in the middle of visible content", function(assert) {
   var content = generateContent(nItems);
   Ember.run(()=>{
-    this.render(template);
     this.setProperties({height, width, itemHeight, itemWidth, content});
+    this.render(template);
   });
   Ember.run(function() {
     content.insertAt(2, {name: "Item 2'"});
   });
 
-  var positionSorted = sortElementsByPosition(this.$('.ember-list-item-view'));
+  var positionSorted = sortElementsByPosition(this.$('.list-item'));
   assert.equal(
     Ember.$(positionSorted[0]).text().trim(),
     "Item 1", "The item has been inserted in the list");
@@ -72,14 +72,14 @@ test("inserting in the middle of visible content", function(assert) {
 test("clearing the content", function(assert) {
   var content = generateContent(nItems);
   Ember.run(()=>{
-    this.render(template);
     this.setProperties({height, width, itemHeight, itemWidth, content});
+    this.render(template);
   });
   Ember.run(function() {
     content.clear();
   });
 
-  assert.equal(this.$('.ember-list-item-view')
+  assert.equal(this.$('.list-item')
     .filter(function(){ return $(this).css('display') !== 'none'; })
     .length, 0, "The rendered list does not contain any elements.");
 });
@@ -87,11 +87,11 @@ test("clearing the content", function(assert) {
 test("deleting the first element", function(assert) {
   var content = generateContent(nItems);
   Ember.run(()=>{
-    this.render(template);
     this.setProperties({height, width, itemHeight, itemWidth, content});
+    this.render(template);
   });
 
-  var positionSorted = sortElementsByPosition(this.$('.ember-list-item-view'));
+  var positionSorted = sortElementsByPosition(this.$('.list-item'));
   assert.equal(
     Ember.$(positionSorted[0]).text().trim(),
     "Item 1", "Item 1 has not been removed from the list.");
@@ -100,7 +100,7 @@ test("deleting the first element", function(assert) {
     content.removeAt(0);
   });
 
-  positionSorted = sortElementsByPosition(this.$('.ember-list-item-view'));
+  positionSorted = sortElementsByPosition(this.$('.list-item'));
   assert.equal(
     Ember.$(positionSorted[0]).text().trim(),
     "Item 2", "Item 1 has been remove from the list.");
