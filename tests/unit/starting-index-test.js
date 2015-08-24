@@ -10,8 +10,8 @@ test("base case", function(assert){
   var content = generateContent(5);
 
   Ember.run(() => {
-    this.render(template);
     this.setProperties({ width, height, itemWidth, itemHeight, content });
+    this.render(template);
   });
 
   assert.equal(this.get('startingIndex', 0));
@@ -23,8 +23,8 @@ test("scroll but within content length", function(assert){
   var offsetY = 100;
 
   Ember.run(() => {
-    this.render(template);
     this.setProperties({ width, height, itemWidth, itemHeight, content, offsetY });
+    this.render(template);
   });
 
   assert.equal(this.get('startingIndex', 0));
@@ -36,8 +36,8 @@ test("scroll but beyond content length", function(assert){
   var offsetY = 100;
 
   Ember.run(() => {
-    this.render(template);
     this.setProperties({ width, height, itemWidth, itemHeight, content, offsetY });
+    this.render(template);
   });
 
   assert.equal(this.get('startingIndex', 0));
@@ -49,8 +49,8 @@ test("larger list", function(assert){
   var offsetY = 100;
 
   Ember.run(() => {
-    this.render(template);
     this.setProperties({ width, height, itemWidth, itemHeight, content, offsetY });
+    this.render(template);
   });
 
   assert.equal(this.get('startingIndex', 28));
@@ -62,8 +62,8 @@ test("larger list (2)", function(assert){
   var offsetY = 100;
 
   Ember.run(() => {
-    this.render(template);
     this.setProperties({ width, height, itemWidth, itemHeight, content, offsetY });
+    this.render(template);
   });
 
   assert.equal(this.get('startingIndex', 1));
