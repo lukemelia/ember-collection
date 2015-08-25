@@ -188,7 +188,7 @@ export default Ember.Component.extend({
     },
     clientSizeChange(clientSize) {
       console.debug('clientSizeChange');
-      this._clientSize = clientSize;
+      this.set('_clientSize', clientSize);
       this.rerender();
     }
   }
